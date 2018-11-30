@@ -1,0 +1,59 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>COloNY</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+{% extends "layout.html" %}
+{% block body %}
+<h1 class = "text-center">Welcome to COloNY:</h1>
+<h2 class = "text-center">Clustering based on OrthoLOgs for New Yields</h2>
+<form action = "/result" method = "POST" enctype="multipart/form-data">
+	{#{%for species in speciesList %}
+<input type="checkbox" id = species name={{species}} value = species />
+	<label for=species>{{species}}</label>
+	{% endfor %}#}
+	<p class = "text-center">Use Preselected (500 Species)</p>
+	<p class = "text-center"><input type = "submit" name = "submit" value = "Preselected 1"/>
+		<input type = "submit" name = "submit" value = "Preselected 2"/></p>
+	<p class = "text-center"> Or create a random subselection (Min 2, Max 5000)</p>
+	<p class = "text-center"> Size:
+	<input type = "text" name = "random" value = "500"/>
+	<input type = "submit" name = "submit" value = "Random Selection"/></p>
+	<p class = "text-center">Or upload a file</p>
+	<p class = "text-center"><input type = "file" name = "uploader"/>
+	<input type = "submit" name = "submit" value = "Upload"/><p>
+	<p class = "text-center">Color by: </p>
+	<p class = "text-center"> Cluster <input type = "radio" name = "colorBy" value = "Cluster" checked = "checked"/>
+	&emsp; Metabolic Genes <input type = "radio" name = "colorBy" value = "Metabolic Genes"/>
+	</p>
+</form>
+<link href="http://cdn.pydata.org/bokeh/release/bokeh-{{ bkversion }}.min.css" rel="stylesheet" type="text/css">
+<link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-{{ bkversion }}.min.css" rel="stylesheet" type="text/css">
+
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-{{ bkversion }}.min.js"></script>
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-{{ bkversion }}.min.js"></script>
+{# {{ fig_script|indent(4)|safe }} {{ fig_div|safe }} #}
+{% endblock %}
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
