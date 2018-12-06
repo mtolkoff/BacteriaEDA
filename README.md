@@ -2,6 +2,7 @@
 This was a project I created with Insight Data Science in consultation with Indigo Agriculture. Indigo is a company which makes "seed coatings," or bacteria and fungi which they coat plant seeds with to help agricultural products grow better. In order to facilitate research and development Indigo sequenced many new fungi and bacteria. They asked me to create and EDA tool which would allow them to understand what species are similar to each other. Additionally, they were concerned that different subsets of microbes would produce different groupings, and so I needed to be able to perform my analysis online. I used TSNE and DBSCAN to visualize and then cluster these bacteria.
 
 ## Data
+Original data can be found at: http://picrust.github.io/picrust/picrust_precalculated_files.html#greengenes-v13-5-and-img-4
 
 ### PicrustDB_Named
 Because of the sensitive nature of Indigo's data, I instead used a placeholder dataset from a project called PICRUSt. This data consists of copy number repeats of KO orthologs which I binarized since the number of repeats isn't necessarily reflective of expression. I subset the number of species down to 5000 and the number of orthologs down to 250 for speed purposes (the original purpose of this app was to be part of a 5 minute demonstration. Speed for Indigo is less critical, but speed for the demonstration purposes were important. Since the dataset is a placeholder, we can still use subsets as a POC). The genes were selected such that they were not very sparse within the dataset. While the original dataset used unique OTU identfiers, as per Indigo's request, I replaced those identifiers with names of the lowest level named classificiation group, which are not necessarily unique. Parsed in dataprocessMPL.py
@@ -31,10 +32,8 @@ The DBSCAN algorithm has a number of parameters which need tuning. This is the c
 
 
 ### silhouette.py
-I have no idea what this is.
+Measures average silhoutte scores for numerous different classifications. Not particularly relevant to the overall project, but included for completeness.
 
-### tuningTSNE.py
-Pretty sure this is garbage and I should throw it out
 
 ### consistency.py
 I discuss briefly the concerns about speed in PicrustDB_Named section, and because of those concerns I cannot set the stopping rules of my TSNE to achieve maximum consistency and get a fast answer. What I can do is measure how consistent my answers are. I take a number of subsamples and for each subsample I measure how consistently a species is grouped with another species. If they are grouped together >50% of the time then I say that "truth" is that they are grouped together. I then measure the chance that if you belong together you wind up grouped together as well as the probability that you are not grouped together if you don't belong together. Through multiple runs I find this first number winds up being between about 86%-90%, and the second number is roughly 0%.
