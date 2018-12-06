@@ -17,7 +17,7 @@ A list of ko orthologs in JSON format with the corresponding names. Parsed in da
 Simple code which gets one out of every 10 lines from a very large file.
 
 ### addNamesLoop.py
-Code which takes the original database format and replace the OTU numbers with names. I do not believe it can be run as-is however.
+Code which takes the original database format and replace the OTU numbers with names. Does not produce an output file. Either include one or I recommend running in the python interface on the command line.
 
 
 ## Model
