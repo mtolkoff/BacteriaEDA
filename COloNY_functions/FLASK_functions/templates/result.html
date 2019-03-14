@@ -1,0 +1,7 @@
+{% extends "layout.html" %} {% block body %}
+<link href="http://cdn.pydata.org/bokeh/release/bokeh-{{ bkversion }}.min.css" rel="stylesheet" type="text/css">
+<link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-{{ bkversion }}.min.css" rel="stylesheet" type="text/css">
+
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-{{ bkversion }}.min.js"></script>
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-{{ bkversion }}.min.js"></script>
+{{ fig_script|indent(4)|safe }} {{ fig_div|safe }} {% endblock %} 

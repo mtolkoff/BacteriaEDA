@@ -1,0 +1,42 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>COloNY</title>
+
+	</head>
+
+	<body>
+
+		{% extends "layout.html" %}
+		{% block body %}
+		<h1 class = "text-center">Welcome to COloNY:</h1>
+		<h2 class = "text-center">Clustering based on OrthoLOgs for New Yields</h2>
+		<form action = "/result" method = "POST" enctype="multipart/form-data">
+
+			<p class = "text-center">Use Preselected</p>
+			<p class = "text-center">
+			<select name = "grouping">
+				<option>Clostridiales</option>
+				<option>Bacteroidales</option>
+				<option>Actinomycetales</option>
+				<option>Bacillales</option>
+				<option>300 Random Species</option>
+				<option>500 Random Species</option>
+			</select>
+
+			<input type = "submit" name = "submit" value = "Compute"/>	
+			</p>
+			<p class = "text-center"> Or create a random subselection (Min 2, Max 5000)</p>
+			<p class = "text-center"> Size:
+			<input type = "text" name = "random" value = "500"/>
+			<input type = "submit" name = "submit" value = "Random Selection"/></p>
+			<p class = "text-center">Or upload a file</p>
+			<p class = "text-center"><input type = "file" name = "uploader"/>
+			<input type = "submit" name = "submit" value = "Upload"/><p>
+		</form>
+		{% endblock %}
+	</body>
+</html>

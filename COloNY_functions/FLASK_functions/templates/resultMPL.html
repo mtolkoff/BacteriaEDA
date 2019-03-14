@@ -1,0 +1,125 @@
+<title>COloNY Reults </title>
+{% extends "layout.html" %} {% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	function submit(){
+		document.getElementById("Recolor").click(); // Simulates button click
+		document.submitForm.submit(); // Submits the form without the button
+	}
+</script>
+
+
+
+<body onload="submit()">
+	<div id = "results_graph"></div>
+	Color By:
+	<input type="radio" name="colorby" value="Cluster" checked="checked"> Cluster
+	<input type="radio" name="colorby" value="Metabolic Genes"> Metabolism 
+	<form id = "recolorsubmit"/>
+		<input type="button" name = "Recolor" onclick="recolor_function()" id = "Recolor" value = "Recolor">
+	</form>
+	<br><br>
+
+	<p> Triangle: Lowest Classification Level at Order Level or Higher<br>
+	Circle: Lowest Classification Level at Family Level or Lower
+	</p>
+	<center>
+		Get nearby taxa information:
+		<select id = "taxa_dropdown" name = "taxa" method = "GET" action = "/">
+			{% for tax in taxa %}
+			<option value = "{{tax}}" SELECTED>{{tax}}</option>
+			{% endfor %}
+		</select>
+		Show:
+		<input type = "textbox" name = "show_number" value = "10" id = "show_number" size = "4"/>
+		<input type = "submit" name = "find_taxa" value = "Go" id = "find_taxa"/>
+		<div id = "results_table"></div>
+	</center>
+</body>
+<script>
+	function recolor_function() {
+		var color_by = $('input[name="colorby"]:checked').val();
+		var ratios = JSON.stringify({{ratios}});
+		var ratios6 = JSON.stringify({{ratios6}});
+		var ratios7 = JSON.stringify({{ratios7}});
+		var ratios_other = JSON.stringify({{ratios_other}});
+
+		var dbScanResults = JSON.stringify({{dbScanResults}});
+		var x_axis = JSON.stringify({{x_axis}});
+		var y_axis = JSON.stringify({{y_axis}});
+
+		var OTU = JSON.stringify({{OTU}});
+		var taxa_name = JSON.stringify("{{taxa_name}}");
+
+
+
+		$.ajax({
+			url: "/results_graph",
+			type: "get",
+			traditional: true,
+			data: {	ratios: ratios,
+				ratios6: ratios6,
+				ratios7: ratios7,
+				ratios_other: ratios_other,
+				x_axis: x_axis,
+				y_axis: y_axis,
+				OTU: OTU,
+				taxa_name: taxa_name,
+				color_by: color_by,
+				dbScanResults: dbScanResults
+			},
+			success: function(response) {
+				$("#results_graph").html(response);
+			},
+			error: function(xhr) {
+				xhr.responseText	
+			}
+		});
+	}
+</script>
+
+
+
+
+
+<script>
+	$("#find_taxa").click(function(){
+		var species = $("#taxa_dropdown").val();
+		var show_number = $("#show_number").val();
+
+		var ratios = JSON.stringify({{ratios}});
+		var ratios6 = JSON.stringify({{ratios6}});
+		var ratios7 = JSON.stringify({{ratios7}});
+		var ratios_other = JSON.stringify({{ratios_other}});
+
+		var x_axis = JSON.stringify({{x_axis}});
+		var y_axis = JSON.stringify({{y_axis}});
+
+		var OTU = JSON.stringify({{OTU}});
+		var taxa_name = JSON.stringify("{{taxa_name}}");
+
+		$.ajax({
+			url: "/results_table",
+			type: "get",
+			traditional: true,
+			data: {species: species,
+				ratios: ratios,
+				ratios6: ratios6,
+				ratios7: ratios7,
+				ratios_other: ratios_other,
+				x_axis: x_axis,
+				y_axis: y_axis,
+				OTU: OTU,
+				taxa_name: taxa_name,
+				show_number: show_number},
+			success: function(response) {
+				$("#results_table").html(response);
+			},
+			error: function(xhr) {
+				xhr.responseText	
+			}
+		});
+	});
+</script>
+</center>
+{%endblock%}

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<style>
+table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding: 15px;
+}
+</style>
+<table align = "center">
+	{% for items in table %}
+	<tr>
+		{% for item in items %}
+		<th>
+			<center>
+				{{item}}
+			</center>
+		</th>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+{% endblock %}
