@@ -49,7 +49,8 @@ def findPath(KO_num, path, node):
                 return nodeBelow
     return False
 
-data = pd.read_table('picrustDB_Named', sep = ',')
+data = pd.read_csv('picrust_Named.csv', index_col = 0)
+data = data.drop('taxa_name', axis = 1)
 
 
 def getClusterMatrix(analyzer):
@@ -218,5 +219,6 @@ for k in range(20):
 
 print(pctGrouped / countGrouped)
 print(pctUngrouped / countUngrouped)
+print((pctGrouped + (countUngrouped - pctUngrouped)) / (countGrouped + countUngrouped))
 
 
